@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+		
+		<!-- Get the AngularJS minified version from CDN -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script type="text/javascript">
+			if (window.location.search.match(/print-pdf/gi)) {
+				var link = document.createElement("link");
+				link.rel = "stylesheet";
+				link.type = "text/css";
+				link.href = "reveal.js/css/print/pdf.css";
+				document.getElementsByTagName("head")[0].appendChild(link);
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal" ng-app="reveangular" ng-controller="ReveAngularController">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div slideshow="slides">
+				
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="reveal.js/lib/js/head.min.js"></script>
+		<script type="text/javascript" src="reveal.js/js/reveal.min.js"></script>
+		
+		<!-- Get the ReveAngularJS lib -->
+		<script type="text/javascript" src="js/reveangular.js"></script>
+	</body>
+</html>
