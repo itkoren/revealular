@@ -1,4 +1,6 @@
-{
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
 	controls: true,
 	progress: true,
 	history: true,
@@ -13,4 +15,4 @@
 		{ src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 		{ src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 	]
-}
+});

@@ -54,14 +54,13 @@ app.directive("slideshow", function() {
 		}
       });
 	  
-	  $http({
-		url: "init.json", 
-		method: "GET"
-	  }).then(function(res) {
-		// Full list of configuration options available here:
-		// https://github.com/hakimel/reveal.js#configuration
-		Reveal.initialize(res.data);                
-	  });
+	  $http.jsonp("init.js").
+		success(function(data, status, headers, config) {
+			//what do I do here?
+		}).
+		error(function(data, status, headers, config) {
+			$scope.error = true;
+		});
     }
   };
 });
