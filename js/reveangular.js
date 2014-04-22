@@ -24,6 +24,12 @@ function parseStep (sce, step, elem) {
                 var subElem = angular.element(html);
                 parseStep(sce, item.value, subElem);
                 elem.append(subElem);
+                
+                if (item.notes) {
+                    var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\">").toString());
+                    notes.html(item.notes);
+                    elem.append(notes);
+                }
             } 
             else if (item && "string" === typeof item) {
                 elem.html(item);
