@@ -7,7 +7,8 @@ function parseStep (sce, step, elem) {
     }
     if ("string" === typeof step) {
         elem.html(step);
-    } else if (step) {
+    } 
+    else if (step) {
         for (var i = 0; i < step.length; i++) {
             var item = step[i];
             if (item && "object" === typeof item) {
@@ -23,7 +24,8 @@ function parseStep (sce, step, elem) {
                 var subElem = angular.element(html);
                 parseStep(sce, item.value, subElem);
                 elem.append(subElem);
-            } else if (item && "string" === typeof item) {
+            } 
+            else if (item && "string" === typeof item) {
                 elem.html(item);
             }
         }
@@ -53,7 +55,8 @@ app.directive("slideshow", function ($http, $sce) {
 
                         if (1 === steps.length) {
                             section = parseStep($sce, steps[0]);
-                        } else {
+                        } 
+                        else {
                             section = angular.element("<section>");
                             for (var j = 0; j < steps.length; j++) {
                                 var subSection = parseStep($sce, steps[j]);
@@ -75,10 +78,10 @@ app.directive("slideshow", function ($http, $sce) {
                     });
 
                     $http.jsonp("init.js").success(function (data, status, headers, config) {
-                            //what do I do here?
-                        }).error(function (data, status, headers, config) {
-                            scope.error = true;
-                        });
+                        //what do I do here?
+                    }).error(function (data, status, headers, config) {
+                        scope.error = true;
+                    });
                 }
             });
         }
