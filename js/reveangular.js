@@ -21,7 +21,7 @@ function parseStep(step, elem) {
 }
 
 app.controller("ReveAngularController", function($scope, $http) {
-  scope.slides = [];
+  $scope.slides = [];
 });
 
 app.directive("slideshow", function($http) {
