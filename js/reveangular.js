@@ -55,7 +55,7 @@ app.directive("slideshow", function() {
       });
 	  
 	  $http({
-		url: "js/init.json", 
+		url: "init.json", 
 		method: "GET"
 	  }).then(function(res) {
 		// Full list of configuration options available here:
@@ -67,7 +67,7 @@ app.directive("slideshow", function() {
 });
 
 app.controller("ReveAngularController", function($scope) {
-	$http.get("js/slides.json").then(function(res) {
+	$http.get("slides.json").then(function(res) {
 		$scope.slides = res.data;                
 	});
 });
