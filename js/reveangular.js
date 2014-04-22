@@ -13,22 +13,23 @@ function parseStep (sce, step, elem) {
             var item = step[i];
             if (item && "object" === typeof item) {
                 var source = item.name;
-                if (item.attributes) {
-                    for (var attr in item.attributes) {
-                        if (attr && item.attributes.hasOwnProperty(attr)) {
-                            source += " " + attr + "=\"" + item.attributes[attr] + "\"";
+                if ("notes" === source.toLowerCase()) {
+                    var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\">").toString());
+                    notes.html(item.value);
+                    elem.append(notes);
+                }
+                else {
+                    if (item.attributes) {
+                        for (var attr in item.attributes) {
+                            if (attr && item.attributes.hasOwnProperty(attr)) {
+                                source += " " + attr + "=\"" + item.attributes[attr] + "\"";
+                            }
                         }
                     }
-                }
-                var html = sce.trustAsHtml("<" + source + ">").toString();
-                var subElem = angular.element(html);
-                parseStep(sce, item.value, subElem);
-                elem.append(subElem);
-                
-                if (item.notes) {
-                    var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\">").toString());
-                    notes.html(item.notes);
-                    elem.append(notes);
+                    var html = sce.trustAsHtml("<" + source + ">").toString();
+                    var subElem = angular.element(html);
+                    parseStep(sce, item.value, subElem);
+                    elem.append(subElem);
                 }
             } 
             else if (item && "string" === typeof item) {
