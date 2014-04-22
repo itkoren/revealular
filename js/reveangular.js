@@ -1,4 +1,4 @@
-var app = angular.module("reveAngularApp", []);
+var app = angular.module("reveangular", []);
 
 function parseStep(step, elem) {
 	if (!elem) {
@@ -20,53 +20,59 @@ function parseStep(step, elem) {
 	return elem;
 }
 
-app.directive("slideshow", function() {
+app.controller("ReveAngularController", function($scope, $http) {
+  scope.slides = [];
+});
+
+app.directive("slideshow", function($http) {
   return {
     scope: {
       slides: "=slideshow"
     },
     link: function(scope, elem, attrs) {
       elem.addClass("slides");
-      for (var i = 0; i < scope.slides.length; i++) {
-        var steps = scope.slides[i].steps;
-		var section;
-		
-        if (1 === steps.length) {
-			section = parseStep(steps[0]);
-        } else {
-			section = angular.element("<section>");
-			for (var j = 0; j < steps.length; j++) {
-				var subSection = parseStep(steps[j]);
-				section.append(subSection);
-			}
+      $http.get("slides.json").then(function(res) {
+        scope.slides = res.data;
+        
+        if (scope.slides) {
+          for (var i = 0; i < scope.slides.length; i++) {
+            var steps = scope.slides[i].steps;
+            var section;
+            
+            if (1 === steps.length) {
+              section = parseStep(steps[0]);
+            } 
+            else {
+              section = angular.element("<section>");
+              for (var j = 0; j < steps.length; j++) {
+                var subSection = parseStep(steps[j]);
+                section.append(subSection);
+              }
+            }
+    
+            if (section) {
+              elem.append(section);
+            }
+          }
+          
+          Reveal.addEventListener("slidechanged", function(event) {
+            // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+            var notes = event.currentSlide.querySelector(".notes");
+            if (notes) {
+              console.info(notes.innerHTML.replace(/\n\s+/g,"\n"));
+            }
+          });
+        
+  
+          $http.jsonp("init.js").
+            success(function(data, status, headers, config) {
+              //what do I do here?
+            }).
+            error(function(data, status, headers, config) {
+              scope.error = true;
+            });
         }
-
-		if (section) {
-			elem.append(section);
-		}
-      }
-      
-	  Reveal.addEventListener("slidechanged", function(event) {
-		// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-		var notes = event.currentSlide.querySelector(".notes");
-		if (notes) {
-			console.info(notes.innerHTML.replace(/\n\s+/g,"\n"));
-		}
       });
-	  
-	  $http.jsonp("init.js").
-		success(function(data, status, headers, config) {
-			//what do I do here?
-		}).
-		error(function(data, status, headers, config) {
-			$scope.error = true;
-		});
     }
   };
-});
-
-app.controller("ReveAngularController", function($scope) {
-	$http.get("slides.json").then(function(res) {
-		$scope.slides = res.data;                
-	});
 });
