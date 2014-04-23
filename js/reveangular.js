@@ -3,7 +3,7 @@
  */
 var ReveAngular = (function() {
 	var app = angular.module("reveangular", []);
-	
+
 	function parseStep(sce, step, elem) {
 	    step = step || "";
 	    if (!elem) {
@@ -44,11 +44,11 @@ var ReveAngular = (function() {
 	
 	    return elem;
 	}
-	
+
 	app.controller("ReveAngularController", function ($scope, $http) {
 	    $scope.slides = [];
 	});
-	
+
 	app.directive("slideshow", function ($http, $sce) {
 	    return {
 	        scope : {
