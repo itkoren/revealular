@@ -1,8 +1,8 @@
 /**
  * Handles loading slides from JSON using AngularJS
  */
-var ReveAngular = (function() {
-	var app = angular.module("reveangular", []);
+var Revealular = (function() {
+	var app = angular.module("revealular", []);
 
 	function parseStep(sce, step, elem) {
 	    step = step || "";
@@ -45,7 +45,7 @@ var ReveAngular = (function() {
 	    return elem;
 	}
 
-	app.controller("ReveAngularController", function ($scope, $http) {
+	app.controller("RevealularController", function ($scope, $http) {
 	    $scope.slides = [];
 	});
 
