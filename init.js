@@ -9,13 +9,7 @@ Reveal.initialize({
     theme: queryHash.theme,
     transition: queryHash.transition || 'default',
     dependencies: [
-        // Load AngularJS
-		{ src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js', condition: function() { return !!document.querySelector( '[ng-app="reveangular"]' ); } },
-		
-		// Get the ReveAngularJS lib
-		{ src: 'js/reveangular.js', condition: function() { return !!angular && !!document.querySelector( '[slideshow="slides"]' ); } },
-		
-		{ src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
         { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 
