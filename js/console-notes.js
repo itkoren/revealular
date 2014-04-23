@@ -12,6 +12,9 @@ var ConsoleNotes = (function() {
 	    }
     }
 	
+    // Fires when reveal.js has loaded all (synchronous) dependencies and is ready to start navigating
+    Reveal.addEventListener("ready", log);
+
     // Fires when slide is changed
     Reveal.addEventListener("slidechanged", log);
 })();
