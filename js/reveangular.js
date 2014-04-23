@@ -51,9 +51,9 @@ app.directive("slideshow", function ($http, $sce) {
             slides : "=slideshow"
         },
         link : function (scope, elem, attrs) {
-			var query = Reveal.getQueryHash();			 
-			var slides = (query.slides || "slides") + ".json";
-			var init = (query.init || "init") + ".js";
+	    var query = Reveal.getQueryHash();			 
+	    var slides = (query.slides || "slides") + ".json";
+	    var init = (query.init || "init") + ".js";
 			
             elem.addClass("slides");
             $http.get(slides).then(function (res) {
