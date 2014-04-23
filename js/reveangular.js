@@ -1,23 +1,6 @@
 var app = angular.module("reveangular", []);
 
-var qs = (function(a) {
-    if ("" === a) {
-        return {};
-    }
-    var b = {};
-    for (var i = 0; i < a.length; ++i) {
-        var p = a[i].split("=");
-        if (2 !== p.length) { 
-          continue;
-		}
-		
-        b[p[0]] = decodeURIComponent(p[1].split("#")[0].replace(/\+/g, " "));
-    }
-	
-    return b;
-})("" !== window.location.search ? window.location.search.substr(1).split("&") : (0 <= window.document.location.hash.indexOf("?") ? window.document.location.hash.split("?")[1].split("&") : ""));
-
-function parseStep (sce, step, elem) {
+function parseStep(sce, step, elem) {
     step = step || "";
     if (!elem) {
         elem = angular.element("<section>");
@@ -68,8 +51,9 @@ app.directive("slideshow", function ($http, $sce) {
             slides : "=slideshow"
         },
         link : function (scope, elem, attrs) {
-			var slides = (qs["slides"] || "slides") + ".json";
-			var init = (qs["init"] || "init") + ".js";
+			var query = Reveal.getQueryHash();			 
+			var slides = (query.slides || "slides") + ".json";
+			var init = (query.init || "init") + ".js";
 			
             elem.addClass("slides");
             $http.get(slides).then(function (res) {

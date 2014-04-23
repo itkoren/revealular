@@ -1,12 +1,13 @@
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
+var queryHash = Reveal.getQueryHash();
 Reveal.initialize({
     controls: true,
     progress: true,
     history: true,
     center: true,
-    theme: Reveal.getQueryHash().theme,
-    transition: Reveal.getQueryHash().transition || 'default',
+    theme: queryHash.theme,
+    transition: queryHash.transition || 'default',
     dependencies: [
         { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
         { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
