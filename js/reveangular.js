@@ -76,14 +76,6 @@ app.directive("slideshow", function ($http, $sce) {
                         }
                     }
 
-                    Reveal.addEventListener("slidechanged", function (event) {
-                        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
-                        var notes = event.currentSlide.querySelector(".notes");
-                        if (notes) {
-                            console.info(notes.innerHTML.replace(/\n\s+/g, "\n"));
-                        }
-                    });
-
                     $http.jsonp("init.js").success(function (data, status, headers, config) {
                         //what do I do here?
                     }).error(function (data, status, headers, config) {
