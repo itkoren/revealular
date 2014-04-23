@@ -1,5 +1,22 @@
 var app = angular.module("reveangular", []);
 
+var qs = (function(a) {
+    if ("" === a) {
+        return {};
+    }
+    var b = {};
+    for (var i = 0; i < a.length; ++i) {
+        var p = a[i].split("=");
+        if (2 !== p.length) { 
+          continue;
+		}
+		
+        b[p[0]] = decodeURIComponent(p[1].split("#")[0].replace(/\+/g, " "));
+    }
+	
+    return b;
+})("" !== window.location.search ? window.location.search.substr(1).split("&") : (0 <= window.document.location.hash.indexOf("?") ? window.document.location.hash.split("?")[1].split("&") : ""));
+
 function parseStep (sce, step, elem) {
     step = step || "";
     if (!elem) {
@@ -51,8 +68,11 @@ app.directive("slideshow", function ($http, $sce) {
             slides : "=slideshow"
         },
         link : function (scope, elem, attrs) {
+			var slides = (qs["slides"] || "slides") + ".json";
+			var init = (qs["init"] || "init") + ".js";
+			
             elem.addClass("slides");
-            $http.get("slides.json").then(function (res) {
+            $http.get(slides).then(function (res) {
                 scope.slides = res.data;
 
                 if (scope.slides) {
@@ -76,7 +96,7 @@ app.directive("slideshow", function ($http, $sce) {
                         }
                     }
 
-                    $http.jsonp("init.js").success(function (data, status, headers, config) {
+                    $http.jsonp(init).success(function (data, status, headers, config) {
                         //what do I do here?
                     }).error(function (data, status, headers, config) {
                         scope.error = true;
