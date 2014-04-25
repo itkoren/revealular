@@ -2,9 +2,15 @@
  * Handles loading slides from JSON using AngularJS
  */
 
+// Assuming this script is loaded synchronous (not async)
 // Reliably grab current running script tag
-var script = document.getElementsByTagName("script");
-script = script[script.length - 1];
+var config;
+var scripts;
+var script = document.currentScript;
+if (!script) {
+    scripts = document.getElementsByTagName("script");
+    script = script[scripts.length - 1];
+}
 
 // Initialize our containers on the global RevealJS object
 Reveal.Revealular = {};
