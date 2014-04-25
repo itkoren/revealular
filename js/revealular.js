@@ -115,7 +115,8 @@ var Revealular = (function () {
             },
             link : function (scope, elem, attrs) {
                 var query = Reveal.getQueryHash();
-                var slides = (query.slides || "slides") + ".json";
+                var ext = (query.ext || ".json");
+                var slides = (query.slides || "slides") + ext;
                 var init = (query.init || "init") + ".js";
                 var local = isSameOrigin(slides);
                 var action = local ? "get" : "jsonp";
