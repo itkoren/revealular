@@ -8,8 +8,8 @@ if (!script) {
     script = script[scripts.length - 1];
 }
 var path = "";
-var idx = script.src.lastIndexOf("/");
-if (-1 !== idx) {
+var idx = script.src.lastIndexOf("/") + 1;
+if (idx) {
     path = script.src.substring(0, idx);
 }
 Reveal.initialize({
