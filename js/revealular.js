@@ -1,6 +1,29 @@
 /**
  * Handles loading slides from JSON using AngularJS
  */
+
+// Reliably grab current running script tag
+var script = document.getElementsByTagName("script");
+script = script[script.length - 1];
+
+// Initialize our containers on the global RevealJS object
+Reveal.Revealular = {};
+Reveal.Revealular.config = {};
+
+// Check for an attribute/config
+if (script.hasAttribute("data-ext")) {
+	// Parse it
+	Reveal.Revealular.config.ext = script.getAttribute("data-ext");
+}
+if (script.hasAttribute("data-slides")) {
+	// Parse it
+	Reveal.Revealular.config.slides = script.getAttribute("data-slides");
+}
+if (script.hasAttribute("data-init")) {
+	// Parse it
+	Reveal.Revealular.config.init = script.getAttribute("data-init");
+}
+
 var Revealular = (function () {
     var app = angular.module("revealular", []);
 
@@ -115,9 +138,9 @@ var Revealular = (function () {
             },
             link : function (scope, elem, attrs) {
                 var query = Reveal.getQueryHash();
-                var ext = (query.ext || ".json");
-                var slides = (query.slides || "slides") + ext;
-                var init = (query.init || "init") + ".js";
+                var ext = (query.ext || Reveal.Revealular.config.ext || ".json");
+                var slides = (query.slides || Reveal.Revealular.config.slides || "slides") + ext;
+                var init = (query.init || Reveal.Revealular.config.init || "init") + ".js";
                 var local = isSameOrigin(slides);
                 var action = local ? "get" : "jsonp";
                 var deferred = new $q.defer();
@@ -125,7 +148,6 @@ var Revealular = (function () {
                 elem.addClass("slides");
 
                 if (!local) {
-                    Reveal.Revealular = Reveal.Revealular || {};
                     Reveal.Revealular.gotSlides = function (data) {
                         deferred.resolve({ data : data });
                     };
