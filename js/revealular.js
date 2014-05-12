@@ -84,7 +84,7 @@ var Revealular = (function () {
                     if ("notes" === source.toLowerCase()) {
                         var additionalData = "";
                         if (item.attributes && true === item.attributes.trim) {
-                          additionalData = " data-trim=\"true\"";
+                            additionalData = " data-trim=\"true\"";
                         }
                         var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\"" + additionalData + ">").toString());
                         if (item.value.join) {
