@@ -4,7 +4,7 @@
 var ConsoleNotes = (function() {
 
   function log(event) {
-	  // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+    // event.previousSlide, event.currentSlide, event.indexh, event.indexv
 	  var notes = event.currentSlide.querySelector(".notes");
 
 		if (notes) {
