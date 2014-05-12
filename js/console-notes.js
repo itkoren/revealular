@@ -3,15 +3,19 @@
  */
 var ConsoleNotes = (function() {
 
-    function log(event) {
-	    // event.previousSlide, event.currentSlide, event.indexh, event.indexv
-	    var notes = event.currentSlide.querySelector(".notes");
-	    
+  function log(event) {
+	  // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+	  var notes = event.currentSlide.querySelector(".notes");
+
 		if (notes) {
-	        console.info(notes.innerHTML.replace(/\n\s+/g, "\n"));
-	    }
-    }
+      var html = notes.innerHTML;
+      if (true == notes.getAttrubute("data-trim")) {
+        html = html.replace(/\n\s+/g, "\n");
+      }
+	    console.info(html);
+	  }
+  }
 	
-    // Fires when slide is changed
-    Reveal.addEventListener("slidechanged", log);
+  // Fires when slide is changed
+  Reveal.addEventListener("slidechanged", log);
 })();

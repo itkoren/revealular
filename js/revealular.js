@@ -75,14 +75,18 @@ var Revealular = (function () {
         }
         if ("string" === typeof step) {
             elem.html(step);
-        } 
+        }
         else if (step) {
             for (var i = 0; i < step.length; i++) {
                 var item = step[i];
                 if (item && "object" === typeof item) {
                     var source = item.name;
                     if ("notes" === source.toLowerCase()) {
-                        var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\">").toString());
+                        var additionalData = "";
+                        if (item.attributes && true === item.attributes.trim) {
+                          additionalData = " data-trim=\"true\"";
+                        }
+                        var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\"" + additionalData + ">").toString());
                         if (item.value.join) {
                             notes.html(item.value.join("\n"));
                         } 
@@ -90,7 +94,7 @@ var Revealular = (function () {
                             notes.html(item.value);
                         }
                         elem.append(notes);
-                    } 
+                    }
                     else {
                         if (item.attributes) {
                             for (var attr in item.attributes) {
@@ -104,7 +108,7 @@ var Revealular = (function () {
                         parseStep(sce, item.value, subElem);
                         elem.append(subElem);
                     }
-                } 
+                }
                 else if (item && "string" === typeof item) {
                     elem.html(item);
                 }
@@ -170,7 +174,7 @@ var Revealular = (function () {
 
                                 if (1 === steps.length) {
                                     section = parseStep($sce, steps[0]);
-                                } 
+                                }
                                 else {
                                     section = angular.element("<section>");
                                     for (var j = 0; j < steps.length; j++) {
