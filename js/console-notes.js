@@ -9,13 +9,13 @@ var ConsoleNotes = (function() {
 
     if (notes) {
       var html = notes.innerHTML;
-      if (true == notes.getAttrubute("data-trim")) {
+      if (true == notes.getAttribute("data-trim")) {
         html = html.replace(/\n\s+/g, "\n");
       }
       console.info(html);
     }
   }
-	
+
   // Fires when slide is changed
   Reveal.addEventListener("slidechanged", log);
 })();
