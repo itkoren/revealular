@@ -19,7 +19,7 @@
     { "steps": [
 		[{
 		  "name":"h2",
-		  "value":"Heads Up"
+		  "value":"Heads Up!"
 		},
 		{
 		  "name":"p",
