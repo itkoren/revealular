@@ -1,0 +1,33 @@
+[
+	{ "steps": [
+		[{
+		  "name":"h1",
+		  "value":"Reveal.js"
+		},
+		{
+		  "name":"h3",
+		  "value":"HTML Presentations Made Easy"
+		},
+		{
+		  "name":"p",
+		  "value": [{
+		    "name":"small",
+		    "value":"Created by <a href=\"http://hakim.se\">Hakim El Hattab</a> / <a href=\"http://twitter.com/hakimel\">@hakimel</a>"
+		  }]
+		}]
+	] },
+    { "steps": [
+		[{
+		  "name":"h2",
+		  "value":"Heads Up!"
+		},
+		{
+		  "name":"p",
+		  "value":"reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with support for CSS 3D transforms to see it in its full glory."
+		},
+		{
+		  "name":"notes",
+		  "value":"Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard)."
+		}]
+  ]}
+]
