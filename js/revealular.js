@@ -89,7 +89,7 @@ var Revealular = (function () {
                         var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\"" + additionalData + ">").toString());
                         if (item.value.join) {
                             notes.html(item.value.join("\n"));
-                        } 
+                        }
                         else {
                             notes.html(item.value);
                         }
@@ -147,7 +147,7 @@ var Revealular = (function () {
                 slides : "=slideshow"
             },
             link : function (scope, elem, attrs) {
-                var query = Reveal.getQueryHash();
+                var query = window.top.opener && window.top.opener.Reveal ? window.top.opener.Reveal.getQueryHash() : Reveal.getQueryHash();
                 var ext = (query.ext || Reveal.Revealular.config.ext || ".json");
                 var slides = (query.slides || Reveal.Revealular.config.slides || "slides") + ext;
                 var init = (query.init || Reveal.Revealular.config.init || "init") + ".js";

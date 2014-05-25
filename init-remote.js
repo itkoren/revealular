@@ -18,17 +18,17 @@ Reveal.initialize({
     history: true,
     center: true,
     theme: queryHash.theme,
-    transition: queryHash.transition || 'default',
+    transition: queryHash.transition || "default",
     dependencies: [
-        { src: path + 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-        { src: path + 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: path + 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: path + "reveal.js/lib/js/classList.js", condition: function() { return !document.body.classList; } },
+        { src: path + "reveal.js/plugin/markdown/marked.js", condition: function() { return !!document.querySelector( "[data-markdown]" ); } },
+        { src: path + "reveal.js/plugin/markdown/markdown.js", condition: function() { return !!document.querySelector( "[data-markdown]" ); } },
+
+        { src: path + "reveal.js/plugin/highlight/highlight.js", async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: path + "reveal.js/plugin/zoom-js/zoom.js", async: true, condition: function() { return !!document.body.classList; } },
+        { src: path + "reveal.js/plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; } },
 
         // Browser Console Speaker Notes
-        { src: path + 'js/console-notes.js', condition: function() { return !!document.body.classList; } },
-
-	    { src: path + 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: path + 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-        { src: path + 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        { src: path + "js/console-notes.js", async: true, condition: function() { return !!document.body.classList; } }
     ]
 });
