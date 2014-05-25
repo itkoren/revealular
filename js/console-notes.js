@@ -10,7 +10,7 @@ var ConsoleNotes = (function() {
     if (notes) {
       var html = notes.innerHTML;
       if (true == notes.getAttribute("data-trim")) {
-        html = html.replace(/\n\s+/g, "\n");
+        html = html.replace(/<br\s*[\/]?>[\n\s+]/gi, "\n");
       }
       console.info(html);
     }

@@ -88,7 +88,7 @@ var Revealular = (function () {
                         }
                         var notes = angular.element(sce.trustAsHtml("<aside class=\"notes\"" + additionalData + ">").toString());
                         if (item.value.join) {
-                            notes.html(item.value.join("\n"));
+                            notes.html(item.value.join("<br>\n"));
                         }
                         else {
                             notes.html(item.value);
