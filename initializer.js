@@ -147,7 +147,7 @@ function loadSlideshow(options) {
 
     createRevealularDOM();
     addScripts(reveal);
-    addJsScript(src, "revealvular", void 0, -1, options);
+    addJsScript(src, "revealvular", void 0, "false", -1, options);
 }
 
 function init() {
