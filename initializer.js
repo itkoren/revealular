@@ -124,6 +124,8 @@ function loadRevealularResources() {
         , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
     ];
 
+    createRevealularDOM();
+    
     addScripts(always);
 
     // If the query includes 'print-pdf', include the PDF print sheet
@@ -135,8 +137,6 @@ function loadRevealularResources() {
     if (!document.addEventListener) { // IE < 9
         addScripts(ielt9);
     }
-
-    createRevealularDOM();
 
     addScripts(reveal);
 }
