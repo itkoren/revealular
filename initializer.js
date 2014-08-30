@@ -80,7 +80,7 @@ function getCurrentProtocol() {
     return "file:" === document.location.protocol ? "http:" : ""
 }
 
-function addScripts(scripts) {
+function addScripts(scripts, options) {
     var i = 0;
     if (!isArray(scripts)) {
         scripts = [ scripts ];
@@ -89,6 +89,20 @@ function addScripts(scripts) {
     for (; i < scripts.length; i++) {
         var spec = scripts[i].split("->");
         spec[1] = getCurrentProtocol() + spec[1];
+        if (spec[6]) {
+            spec[6] = JSON.parse(spec[6]);
+        }
+
+        if (options) {
+            if (!spec[6]) {
+                spec[6] = {};
+            }
+            for (var attr in options) {
+                if (attr && options.hasOwnProperty(attr)) {
+                    spec[6][attr] = options[attr];
+                }
+            }
+        }
 
         addScript.apply(this, spec);
     }
@@ -146,7 +160,7 @@ function loadSlideshow(options) {
     var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
     createRevealularDOM();
-    addScripts(reveal);
+    addScripts(reveal, { onload: "javascript:alerts('a');" });
     addJsScript(src, "revealvular", void 0, "false", -1, options);
 }
 
