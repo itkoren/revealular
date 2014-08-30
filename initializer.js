@@ -40,10 +40,10 @@ function addJsScript(src, id, bust, index, options) {
     }
 
     if (!last) {
-        scripts.insertBefore(script, selected);
+        scripts[0].parentNode.insertBefore(script, selected);
     }
     else {
-        scripts.appendChild(script);
+        scripts[0].parentNode.appendChild(script);
     }
 }
 
