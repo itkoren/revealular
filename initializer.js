@@ -121,7 +121,7 @@ function addScripts(scripts) {
             script.href = getCurrentProtocol() + script.href;
         }
 
-        addScript.apply(this, script);
+        addScript(script);
     }
 }
 
