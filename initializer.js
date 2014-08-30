@@ -160,7 +160,7 @@ function loadSlideshow(options) {
     var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
     createRevealularDOM();
-    addScripts(reveal, { onload: "javascript:alerts('a');" });
+    addScripts(reveal, { onload: "javascript:alert('a');" });
     addJsScript(src, "revealvular", void 0, "false", -1, options);
 }
 
