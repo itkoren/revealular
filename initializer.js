@@ -119,13 +119,6 @@ function loadRevealularResources() {
         "js->//gh.itkoren.com/revealular/reveal.js/lib/js/html5shiv.js"
     ];
 
-    var reveal = [
-          "js->//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js"
-        , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
-    ];
-
-    createRevealularDOM();
-
     addScripts(always);
 
     // If the query includes 'print-pdf', include the PDF print sheet
@@ -137,13 +130,17 @@ function loadRevealularResources() {
     if (!document.addEventListener) { // IE < 9
         addScripts(ielt9);
     }
-
-    addScripts(reveal);
 }
 
 function loadSlideshow(options) {
+    var reveal = [
+        "js->//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js"
+        , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
+    ];
     var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
+    addScripts(reveal);
+    createRevealularDOM();
     addJsScript(src, "revealvular", true, -1, options);
 }
 
