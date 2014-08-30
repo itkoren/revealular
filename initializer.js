@@ -60,7 +60,7 @@ function addScripts(scripts) {
     }
 
     for (; i < scripts.length; i++) {
-        var spec = scripts.split("->");
+        var spec = scripts[i].split("->");
         spec[1] = getCurrentProtocol() + spec[1];
 
         addScript.apply(this, spec);
