@@ -11,9 +11,18 @@ function isArray(obj) {
     }
 }
 
-function addJsScript(src, id, bust) {
+function addJsScript(src, id, bust, index, options) {
     var script = document.createElement("script");
-    var scripts = document.getElementsByTagName("script")[0];
+    var scripts = document.getElementsByTagName("script");
+    var selected = scripts[0];
+    var last = false;
+
+    if (!index || 0 > index || index > (scripts.length - 1)) {
+        last = true;
+    }
+    else if (0 < index) {
+        selected = scripts[index];
+    }
 
     script.setAttribute("type", "text/javascript");
     script.setAttribute("async", true);
@@ -22,7 +31,20 @@ function addJsScript(src, id, bust) {
     }
     script.setAttribute("src", src + getCacheBuster(bust));
 
-    scripts.parentNode.insertBefore(script, scripts);
+    if (options) {
+        for (var option in options) {
+            if (option && options.hasOwnProperty(option)) {
+                script.setAttribute(option, options[option]);
+            }
+        }
+    }
+
+    if (!last) {
+        scripts.parentNode.insertBefore(script, selected);
+    }
+    else {
+        scripts.parentNode.appendChild(script);
+    }
 }
 
 function addCssScript(href, id, bust) {
@@ -39,13 +61,13 @@ function addCssScript(href, id, bust) {
     document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-function addScript(type, path, id, bust) {
+function addScript(type, path, id, bust, index, options) {
     var resolver = {
           css: addCssScript
         , js: addJsScript
     };
 
-    resolver[type.toLowerCase()] && resolver[type.toLowerCase()](path, id, bust);
+    resolver[type.toLowerCase()] && resolver[type.toLowerCase()](path, id, bust, index, options);
 }
 
 function getCurrentProtocol() {
@@ -117,6 +139,12 @@ function loadRevealularResources() {
     createRevealularDOM();
 
     addScripts(reveal);
+}
+
+function loadSlideshow(options) {
+    var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
+
+    addJsScript(src, "revealvular", true, -1, options);
 }
 
 function init() {
