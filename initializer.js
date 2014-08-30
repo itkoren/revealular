@@ -11,7 +11,15 @@ function isArray(obj) {
     }
 }
 
-function addJsScript(src, id, bust, async, index, options) {
+function addJsScript(options) {
+    options = options || {};
+
+    var src = options.src;
+    var id = options.id;
+    var bust = options.bust;
+    var async = options.async;
+    var index = options.index;
+    var additional = options.additional;
     var script = document.createElement("script");
     var scripts = document.getElementsByTagName("script");
     var selected = scripts[0];
@@ -33,10 +41,10 @@ function addJsScript(src, id, bust, async, index, options) {
     }
     script.setAttribute("src", src + getCacheBuster(bust));
 
-    if (options) {
-        for (var option in options) {
-            if (option && options.hasOwnProperty(option)) {
-                script.setAttribute(option, options[option]);
+    if (additional) {
+        for (var option in additional) {
+            if (option && additional.hasOwnProperty(option)) {
+                script.setAttribute(option, additional[option]);
             }
         }
     }
@@ -49,7 +57,15 @@ function addJsScript(src, id, bust, async, index, options) {
     }
 }
 
-function addCssScript(href, id, bust, async) {
+function addCssScript(options) {
+    options = options || {};
+
+    var href = options.href;
+    var id = options.id;
+    var bust = options.bust;
+    var async = options.async;
+    var additional = options.additional;
+
     var script = document.createElement("link");
 
     script.setAttribute("rel", "stylesheet");
@@ -64,47 +80,48 @@ function addCssScript(href, id, bust, async) {
     }
     script.setAttribute("href", href + getCacheBuster(bust));
 
+    if (additional) {
+        for (var option in additional) {
+            if (option && additional.hasOwnProperty(option)) {
+                script.setAttribute(option, additional[option]);
+            }
+        }
+    }
+
     document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-function addScript(type, path, id, bust, async, index, options) {
+function addScript(options) {
+    options = options || {};
+
     var resolver = {
           css: addCssScript
         , js: addJsScript
     };
 
-    resolver[type.toLowerCase()] && resolver[type.toLowerCase()](path, id, bust, async, index, options);
+    resolver[options.type.toLowerCase()] && resolver[options.type.toLowerCase()](options);
 }
 
 function getCurrentProtocol() {
     return "file:" === document.location.protocol ? "http:" : ""
 }
 
-function addScripts(scripts, options) {
+function addScripts(scripts) {
     var i = 0;
     if (!isArray(scripts)) {
         scripts = [ scripts ];
     }
 
     for (; i < scripts.length; i++) {
-        var spec = scripts[i].split("->");
-        spec[1] = getCurrentProtocol() + spec[1];
-        if (spec[6]) {
-            spec[6] = JSON.parse(spec[6]);
+        var script = scripts[i];
+        if (script.src) {
+            script.src = getCurrentProtocol() + script.src;
+        }
+        else if (script.href) {
+            script.href = getCurrentProtocol() + script.href;
         }
 
-        if (options) {
-            if (!spec[6]) {
-                spec[6] = {};
-            }
-            for (var attr in options) {
-                if (attr && options.hasOwnProperty(attr)) {
-                    spec[6][attr] = options[attr];
-                }
-            }
-        }
-
-        addScript.apply(this, spec);
+        addScript.apply(this, script);
     }
 }
 
@@ -125,18 +142,38 @@ function createRevealularDOM() {
 
 function loadRevealularResources() {
     var always = [
-          "css->//gh.itkoren.com/revealular/reveal.js/css/reveal.min.css"
-        , "css->//gh.itkoren.com/revealular/reveal.js/css/theme/default.css->theme"
-        , "css->//gh.itkoren.com/revealular/reveal.js/lib/css/zenburn.css"
-        , "js->//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js->angular->->false"
+        {
+              type: "css"
+            , href: "//gh.itkoren.com/revealular/reveal.js/css/reveal.min.css"
+        },
+        {
+              type: "css"
+            , href: "//gh.itkoren.com/revealular/reveal.js/css/theme/default.css"
+            , id: "theme"
+        },
+        {
+              type: "css"
+            , href: "//gh.itkoren.com/revealular/reveal.js/lib/css/zenburn.css"
+        },
+        {
+              type: "js"
+            , src: "//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"
+            , async: false
+        }
     ];
 
     var print = [
-        "css->//gh.itkoren.com/revealular/reveal.js/css/print/pdf.css"
+        {
+              type: "css"
+            , href: "//gh.itkoren.com/revealular/reveal.js/css/print/pdf.css"
+        }
     ];
 
     var ielt9 = [
-        "js->//gh.itkoren.com/revealular/reveal.js/lib/js/html5shiv.js"
+        {
+              type: "js"
+            , src: "//gh.itkoren.com/revealular/reveal.js/lib/js/html5shiv.js"
+        }
     ];
 
     addScripts(always);
@@ -153,15 +190,36 @@ function loadRevealularResources() {
 }
 
 function loadSlideshow(options) {
+    options = options || {};
+
     var reveal = [
-          "js->//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js->reveal-head->->false"
-        , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js->reveal->->false"
+        {
+              type: "js"
+            , src: "//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js"
+            , async: false
+        },
+        {
+              type: "js"
+            , src: "//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
+            , async: false
+            , additional: {
+                 onload: "javascript:loadRevealular(" + JSON.stringify(options) + ");"
+              }
+        }
     ];
-    var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
     createRevealularDOM();
-    addScripts(reveal, { onload: "javascript:alert('a');" });
-    addJsScript(src, "revealvular", void 0, "false", -1, options);
+    addScripts(reveal);
+}
+
+function loadRevealular(options) {
+    var script = {
+          src: getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js"
+        , async: false
+        , additional: options
+    };
+
+    addJsScript(script);
 }
 
 function init() {
