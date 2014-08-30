@@ -203,7 +203,7 @@ function loadSlideshow(options) {
             , src: "//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
             , async: false
             , additional: {
-                 onload: "javascript:loadRevealular(" + JSON.stringify(options) + ");"
+                 onload: 'javascript:loadRevealular(' + JSON.stringify(options) + ');'
               }
         }
     ];
