@@ -25,7 +25,9 @@ function addJsScript(src, id, bust, async, index, options) {
     }
 
     script.setAttribute("type", "text/javascript");
-    script.setAttribute("async", (false !== async && "false" !== async).toString());
+    if (false != async) {
+        script.setAttribute("async", "true");
+    }
     if (id) {
         script.setAttribute("id", id);
     }
@@ -47,12 +49,16 @@ function addJsScript(src, id, bust, async, index, options) {
     }
 }
 
-function addCssScript(href, id, bust) {
+function addCssScript(href, id, bust, async) {
     var script = document.createElement("link");
 
     script.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "text/css");
-    script.setAttribute("async", true);
+
+    if (false != async) {
+        script.setAttribute("async", "true");
+    }
+
     if (id) {
         script.setAttribute("id", id);
     }
