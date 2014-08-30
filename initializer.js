@@ -125,7 +125,7 @@ function loadRevealularResources() {
     ];
 
     createRevealularDOM();
-    
+
     addScripts(always);
 
     // If the query includes 'print-pdf', include the PDF print sheet
