@@ -27,7 +27,6 @@ function addJsScript(src, id, bust) {
 
 function addCssScript(href, id, bust) {
     var script = document.createElement("link");
-    var scripts = document.getElementsByTagName("link")[0];
 
     script.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "text/css");
@@ -37,7 +36,7 @@ function addCssScript(href, id, bust) {
     }
     script.setAttribute("href", href + getCacheBuster(bust));
 
-    scripts.parentNode.insertBefore(script, scripts);
+    document.getElementsByTagName("head")[0].appendChild(script);
 }
 
 function addScript(type, path, id, bust) {
