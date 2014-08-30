@@ -25,7 +25,7 @@ function addJsScript(src, id, bust, async, index, options) {
     }
 
     script.setAttribute("type", "text/javascript");
-    if (false != async) {
+    if ("false" != async) {
         script.setAttribute("async", "true");
     }
     if (id) {
@@ -55,7 +55,7 @@ function addCssScript(href, id, bust, async) {
     script.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "text/css");
 
-    if (false != async) {
+    if ("false" != async) {
         script.setAttribute("async", "true");
     }
 
