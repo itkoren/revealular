@@ -139,8 +139,8 @@ function loadSlideshow(options) {
     ];
     var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
-    addScripts(reveal);
     createRevealularDOM();
+    addScripts(reveal);
     addJsScript(src, "revealvular", void 0, -1, options);
 }
 
