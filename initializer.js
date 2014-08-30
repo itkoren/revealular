@@ -2,6 +2,18 @@ function getCacheBuster(bust) {
     return (bust ? "?_t=" + (new Date()).getTime() : "");
 }
 
+function getCurrentProtocol() {
+    return "file:" === document.location.protocol ? "http:" : ""
+}
+
+function parsePath(path, bust) {
+    if (0 === path.indexOf("//")) {
+        path = getCurrentProtocol() + path;
+    }
+
+    return path + getCacheBuster(bust);
+}
+
 function isArray(obj) {
     if (Array.isArray) {
         return Array.isArray(obj);
@@ -9,6 +21,14 @@ function isArray(obj) {
     else {
         return "[object Array]" === Object.prototype.toString.call(obj);
     }
+}
+
+function after(calls, callback) {
+    return function() {
+        if (0 === --calls) {
+            callback.apply(this, [].slice.apply(arguments));
+        }
+    };
 }
 
 function addJsScript(options) {
@@ -39,7 +59,7 @@ function addJsScript(options) {
     if (id) {
         script.setAttribute("id", id);
     }
-    script.setAttribute("src", src + getCacheBuster(bust));
+    script.setAttribute("src", parsePath(src, bust));
 
     if (additional) {
         for (var option in additional) {
@@ -78,7 +98,7 @@ function addCssScript(options) {
     if (id) {
         script.setAttribute("id", id);
     }
-    script.setAttribute("href", href + getCacheBuster(bust));
+    script.setAttribute("href", parsePath(href, bust));
 
     if (additional) {
         for (var option in additional) {
@@ -102,10 +122,6 @@ function addScript(options) {
     resolver[options.type.toLowerCase()] && resolver[options.type.toLowerCase()](options);
 }
 
-function getCurrentProtocol() {
-    return "file:" === document.location.protocol ? "http:" : ""
-}
-
 function addScripts(scripts) {
     var i = 0;
     if (!isArray(scripts)) {
@@ -114,13 +130,6 @@ function addScripts(scripts) {
 
     for (; i < scripts.length; i++) {
         var script = scripts[i];
-        if (script.src) {
-            script.src = getCurrentProtocol() + script.src;
-        }
-        else if (script.href) {
-            script.href = getCurrentProtocol() + script.href;
-        }
-
         addScript(script);
     }
 }
@@ -140,7 +149,7 @@ function createRevealularDOM() {
     document.getElementsByTagName("body")[0].appendChild(wrapper);
 }
 
-function loadRevealularResources() {
+function loadRevealularResources(options) {
     var always = [
         {
               type: "css"
@@ -159,6 +168,9 @@ function loadRevealularResources() {
               type: "js"
             , src: "//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"
             , async: false
+            , additional: {
+                  onload: 'javascript:loadReveal(' + JSON.stringify(options) + ');'
+              }
         }
     ];
 
@@ -189,7 +201,7 @@ function loadRevealularResources() {
     }
 }
 
-function loadSlideshow(options) {
+function loadReveal(options) {
     options = options || {};
 
     var reveal = [
@@ -214,7 +226,7 @@ function loadSlideshow(options) {
 
 function loadRevealular(options) {
     var script = {
-          src: getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js"
+          src: "//gh.itkoren.com/revealular/js/revealular.js"
         , async: false
         , additional: options
     };
@@ -228,7 +240,28 @@ function init() {
         window.location.search = window.location.search.replace(/\//g, "%2F");
     }
 
-    loadRevealularResources();
+    // Assuming this script is loaded synchronous (not async)
+    // Reliably grab current running script tag
+    var scripts;
+    var script = document.currentScript;
+    var options = {};
+    if (!script) {
+        scripts = document.getElementsByTagName("script");
+        script = script[scripts.length - 1];
+    }
+
+    // Check for an attribute/config
+    if (script.hasAttribute("data-ext")) {
+        options["data-ext"] = script.getAttribute("data-ext");
+    }
+    if (script.hasAttribute("data-slides")) {
+        options["data-slides"] = script.getAttribute("data-slides");
+    }
+    if (script.hasAttribute("data-init")) {
+        options["data-init"] = script.getAttribute("data-init");
+    }
+
+    loadRevealularResources(options);
 }
 
 init();
