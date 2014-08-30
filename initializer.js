@@ -33,7 +33,7 @@ function addJsScript(options) {
     }
 
     script.setAttribute("type", "text/javascript");
-    if ("false" != async) {
+    if (false !== async) {
         script.setAttribute("async", "true");
     }
     if (id) {
@@ -71,7 +71,7 @@ function addCssScript(options) {
     script.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "text/css");
 
-    if ("false" != async) {
+    if (false !== async) {
         script.setAttribute("async", "true");
     }
 
