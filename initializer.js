@@ -11,7 +11,7 @@ function isArray(obj) {
     }
 }
 
-function addJsScript(src, id, bust, index, options) {
+function addJsScript(src, id, bust, async, index, options) {
     var script = document.createElement("script");
     var scripts = document.getElementsByTagName("script");
     var selected = scripts[0];
@@ -25,7 +25,7 @@ function addJsScript(src, id, bust, index, options) {
     }
 
     script.setAttribute("type", "text/javascript");
-    script.setAttribute("async", true);
+    script.setAttribute("async", (false !== async && "false" !== async).toString());
     if (id) {
         script.setAttribute("id", id);
     }
@@ -61,13 +61,13 @@ function addCssScript(href, id, bust) {
     document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-function addScript(type, path, id, bust, index, options) {
+function addScript(type, path, id, bust, async, index, options) {
     var resolver = {
           css: addCssScript
         , js: addJsScript
     };
 
-    resolver[type.toLowerCase()] && resolver[type.toLowerCase()](path, id, bust, index, options);
+    resolver[type.toLowerCase()] && resolver[type.toLowerCase()](path, id, bust, async, index, options);
 }
 
 function getCurrentProtocol() {
@@ -108,7 +108,7 @@ function loadRevealularResources() {
           "css->//gh.itkoren.com/revealular/reveal.js/css/reveal.min.css"
         , "css->//gh.itkoren.com/revealular/reveal.js/css/theme/default.css->theme"
         , "css->//gh.itkoren.com/revealular/reveal.js/lib/css/zenburn.css"
-        , "js->//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"
+        , "js->//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js->angular->->false"
     ];
 
     var print = [
@@ -134,8 +134,8 @@ function loadRevealularResources() {
 
 function loadSlideshow(options) {
     var reveal = [
-          "js->//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js"
-        , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js"
+          "js->//gh.itkoren.com/revealular/reveal.js/lib/js/head.min.js->reveal-head->->false"
+        , "js->//gh.itkoren.com/revealular/reveal.js/js/reveal.min.js->reveal->->false"
     ];
     var src = getCurrentProtocol() + "//gh.itkoren.com/revealular/js/revealular.js";
 
