@@ -147,7 +147,18 @@ var Revealular = (function () {
                 slides : "=slideshow"
             },
             link : function (scope, elem, attrs) {
-                var query = window.top.opener && window.top.opener.Reveal ? window.top.opener.Reveal.getQueryHash() : Reveal.getQueryHash();
+                var query;
+
+                // Now try access upper level windows if possible
+                try {
+                    query = window.top.opener && window.top.opener.Reveal && window.top.opener.Reveal.getQueryHash();
+                }
+                catch (ex) {
+                    // Access denied, we'll use the current query
+                }
+
+                query = query || Reveal.getQueryHash();
+
                 var ext = (query.ext || Reveal.Revealular.config.ext || ".json");
                 var slides = (query.slides || Reveal.Revealular.config.slides || "slides") + ext;
                 var init = (query.init || Reveal.Revealular.config.init || "init") + ".js";
