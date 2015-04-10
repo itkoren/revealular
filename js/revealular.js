@@ -118,6 +118,40 @@ var Revealular = (function () {
         return elem;
     }
 
+    /**
+     * Method to add DOM events listener to an element
+     * @param {Object} element - the element we're binding to
+     * @param {String} event - the event we want to bind
+     * @param {Function} callback - the function to execute
+     */
+    function addEventListener(element, event, callback) {
+        if (element.addEventListener) {
+            element.addEventListener(event, callback, false);
+        }
+        else {
+            element.attachEvent("on" + event, callback);
+        }
+
+        return function() {
+            removeEventListener(element, event, callback);
+        };
+    }
+
+    /**
+     * Method to add DOM events listener to an element
+     * @param {Object} element - the element we're binding to
+     * @param {String} event - the event we want to bind
+     * @param {Function} callback - the function to execute
+     */
+    function removeEventListener(element, event, callback) {
+        if (element.removeEventListener) {
+            element.removeEventListener(event, callback, false);
+        }
+        else {
+            element.detachEvent("on" + event, callback);
+        }
+    }
+
     function addScript (js, scope, q) {
         var deferred = q.defer();
 
@@ -127,7 +161,8 @@ var Revealular = (function () {
         script.setAttribute("type", "text/javascript");
         script.setAttribute("async", true);
         script.setAttribute("src", encodeURI(js));
-        script.setAttribute("onload", function () {
+
+        addEventListener(script, "load", function () {
             // The script is ready for use, resolve promise
             scope.$apply(deferred.resolve());
         });
